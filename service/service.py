@@ -52,7 +52,7 @@ def get_entries(page=page):
             if req.ok:
                 data = json.loads(req.text)
                 lastpage = data['pages']
-                if page >= lastpage:
+                if page > lastpage:
                     break
                 try:
                     page += 1
