@@ -76,6 +76,8 @@ def get_entries(page=page):
         logger.info(f'Yielded: {count}, last page: {page}')
     except Exception as e:
         logger.error(f"def get_entities issue: {e}")
+
+        
 @app.route("/entries")
 def entities():
     try:
