@@ -16,10 +16,10 @@ with open("banner.txt", 'r') as banner:
         cherrypy.log(repr(line))
 
 # Log to stdout
-stdout_handler = logging.StreamHandler()
-stdout_handler.setFormatter(logging.Formatter(format_string))
-logger.addHandler(stdout_handler)
-logger.setLevel(logging.DEBUG)
+# stdout_handler = logging.StreamHandler()
+# stdout_handler.setFormatter(logging.Formatter(format_string))
+# logger.addHandler(stdout_handler)
+# logger.setLevel(logging.DEBUG)
 page = 1
 
 
@@ -39,6 +39,7 @@ def get_entries(page=page):
         base_url = "http://hotell.difi.no/api/json/difi/elma/participants"
         nestedpath = "entries" #request.args.get("nestedpath")
         logger.info(f"Fetching data from url: {base_url}")
+        logger.info(f"fetching data from page: {page}.")
         count = 0
 
         while True:
@@ -50,7 +51,6 @@ def get_entries(page=page):
             if req.ok:
                 data = json.loads(req.text)
                 lastpage = data['pages']
-                logger.info(f"fetching data from page: {page} to last page: {lastpage}.")
                 if page >= lastpage:
                     break
                 try:
@@ -73,7 +73,7 @@ def get_entries(page=page):
                 raise ValueError(f'value object expected in response to url: {base_url} got {req}')
                 break
         
-        logger.info(f'Yielded: {count}, last page: {page}. Since set to {page}')
+        logger.info(f'Yielded: {count}, last page: {page}. Since set to {(page -1)}')
     except Exception as e:
         logger.error(f"def get_entities issue: {e}")
 
@@ -85,7 +85,8 @@ def entities():
             page = 1
             logger.info("since value is set to page " + str(page))
         else:
-            page = request.args.get('since')
+            pagestr = request.args.get('since')
+            page = int(pagestr) -1
             logger.info("since/page set to " + str(page))
         return Response(stream_as_json(get_entries(page)), mimetype='application/json')
     except Exception as e:
