@@ -14,6 +14,7 @@ logger = logging.getLogger('ELMA-Service')
 with open("banner.txt", 'r') as banner:
     for line in banner:
         cherrypy.log(repr(line))
+    cherrypy.log("")
 
 # Log to stdout
 # stdout_handler = logging.StreamHandler()
