@@ -13,8 +13,8 @@ logger = logging.getLogger('ELMA-Service')
 
 with open("banner.txt", 'r') as banner:
     for line in banner:
-        cherrypy.log(repr(line))
-    cherrypy.log("")
+        logger.error(line)
+logger.error("")
 
 # Log to stdout
 # stdout_handler = logging.StreamHandler()
@@ -32,7 +32,7 @@ def stream_as_json(generator_function):
             yield ','
         else:
             first = False
-        yield json.dumps(item)
+        yield json.dumps(item)@
     yield ']'
 
 def get_entries(page=page):
