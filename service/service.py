@@ -56,7 +56,7 @@ def get_entries(page=page):
                 try:
                     page += 1
                 except:
-                    logger.info("page+1 did not work" + str(type(page)))
+                    logger.info("page + 1 did not work" + str(type(page)))
 
                 for item in data[f'{nestedpath}']:
                     i = dict(item)
@@ -64,7 +64,7 @@ def get_entries(page=page):
                         i["_id"] = item[f'identifier']+"-"+item['Icd']
                         i["_updated"] = page
                     except Exception as e:
-                        logger.error(f"Something went wrong: {e}")
+                        logger.error(f"ERROR: {e}")
                     yield i
                     count +=1
                     
@@ -73,7 +73,7 @@ def get_entries(page=page):
                 raise ValueError(f'value object expected in response to url: {base_url} got {req}')
                 break
         
-        logger.info(f'Yielded: {count}, last page: {page}')
+        logger.info(f'Yielded: {count}, last page: {page}. Since set to {page}')
     except Exception as e:
         logger.error(f"def get_entities issue: {e}")
 
