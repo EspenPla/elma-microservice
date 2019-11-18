@@ -32,7 +32,7 @@ def stream_as_json(generator_function):
             yield ','
         else:
             first = False
-        yield json.dumps(item)@
+        yield json.dumps(item)
     yield ']'
 
 def get_entries(page=page):
