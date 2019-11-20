@@ -13,7 +13,7 @@ logger = logging.getLogger('ELMA-Service')
 
 with open("banner.txt", 'r') as banner:
     for line in banner:
-        logger.error(line)
+        logger.error(repr(line))
 logger.error("")
 
 # Log to stdout
@@ -38,7 +38,7 @@ def stream_as_json(generator_function):
 def get_entries(page=page):
     try:
         base_url = "http://hotell.difi.no/api/json/difi/elma/participants"
-        nestedpath = "entries" #request.args.get("nestedpath")
+        nestedpath = "entries" #request.args.get("nestedpath") having nested path hardcoded as this will probably not change.
         logger.info(f"Fetching data from url: {base_url}")
         logger.info(f"fetching data from page: {page}.")
         count = 0
@@ -62,7 +62,9 @@ def get_entries(page=page):
                 for item in data[f'{nestedpath}']:
                     i = dict(item)
                     try:
-                        i["_id"] = item[f'identifier']+"-"+item['Icd']
+                        #i["_id"] = item[f'identifier']+"-"+item['Icd']
+                        # This is the standard format. Moving over from having the identifier first. 
+                        i["_id"] = item['Icd']+":"+item[f'identifier']
                         i["_updated"] = page
                     except Exception as e:
                         logger.error(f"ERROR: {e}")
