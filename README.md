@@ -16,28 +16,6 @@ It can be used to import  all participants to Sesam.
 }
 ```
 
-**An example of input pipe config for incremental issues import**  
-   ```
-   {
-  "_id": "<Name of your pipe i.e youtrack-issues>",
-  "type": "pipe",
-  "source": {
-    "type": "json",
-    "system": "<name of your system>",
-    "is_chronological": true,
-    "supports_since": true,
-    "url": "/issues"
-  },
-  "transform": {
-    "type": "dtl",
-    "rules": {
-      "default": [
-        ["copy", "*"]
-      ]
-    }
-  }
-}
-```
 
 **An example of input pipe config to participants**  
    ```
@@ -47,6 +25,7 @@ It can be used to import  all participants to Sesam.
   "source": {
     "type": "json",
     "system": "elma-system",
+    "supports_since": true,    
     "url": "/entries" ## Add parameter "?since=X" to just get the latest X pages
   },
   "transform": {
