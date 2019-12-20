@@ -1,7 +1,7 @@
 # elma-microservice
 
 
-It can be used to import  all participants.
+It can be used to import  all participants to Sesam.
 
 **An example of system config**   
 ```
